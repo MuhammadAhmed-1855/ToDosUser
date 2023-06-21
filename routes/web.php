@@ -14,9 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+// Route::get('/', function () {
+//     return view('home');
+// });
+
+Route::get('/home', function () {
     return view('home');
 });
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+Route::get('/profile', function () {
+    return view('profile');
+})->middleware(['auth'])->name('profile');
 
 Route::get('/about-us', function () {
     return view('about-us');
@@ -33,3 +45,5 @@ Route::get('/registerview', function () {
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
 Route::post('/register', [UserController::class, 'register'])->name('register');
+
+Route::post('/logout', [UserController::class, 'logout'])->name('logout');
