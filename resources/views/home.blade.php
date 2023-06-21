@@ -26,7 +26,11 @@
             padding-left: 10%;
             padding-top: 10%
         }
-        div {
+        section {
+            text-align: center;
+            justify-content: center;
+        }
+        nav {
             display: flex;
             margin: 0px 5%;
             width: 90%;
@@ -41,12 +45,19 @@
 </head>
 <body class="antialiased">
     <div class="container">
-        <h1>Complete-It</h1>
-        <ul>
-            <li>Home</li>
-            <li>Login</li>
-            <li>Register</li>
-        </ul>
+        <nav>
+            <h1>Complete-It</h1>
+            <ul>
+                <li>Home</li>
+                <li>Login</li>
+                <li>Register</li>
+            </ul>
+        </nav>
+
+        <section>
+            <h2>Home</h2>
+            <p>Coming Soon....</p>
+        </section>
     </div>    
 </body>
 </html>
