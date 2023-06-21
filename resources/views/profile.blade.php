@@ -56,7 +56,15 @@
 
         <section>
             <h2>Profile</h2>
-            <p>Welcome, Coming Soon....</p>
+            <p>Welcome, 
+                <strong>
+                    @auth
+                        {{ Auth::user()->name }}
+                    @else
+                        Guest
+                    @endauth
+                </strong>
+            </p>
         </section>
     </div>    
 </body>

@@ -17,46 +17,36 @@
         <nav>
             <h1>Complete-It</h1>
             <ul>
-                @auth
-                    <li>
-                        <form action="/dashboard" method="get">
-                            <button type="submit">Dashboard</button>
-                        </form>
-                    </li>
-                    <li>
-                        <form action="{{ route('logout') }}" method="POST">
-                            {{ csrf_field() }}
-                            <button type="submit">Logout</button>
-                        </form>
-                    </li>
-                    <li>
-                        <form action="/profile" method="get">
-                            <button type="submit">Profile</button>
-                        </form>
-                    </li>
-                @else
-                    <li>
-                        <form action="/home" method="get">
-                            <button type="submit">Home</button>
-                        </form>
-                    </li>
-                    <li>
-                        <form action="/loginview" method="get">
-                            <button type="submit">Login</button>
-                        </form>
-                    </li>
-                    <li>
-                        <form action="/registerview" method="get">
-                            <button type="submit">Register</button>
-                        </form>
-                    </li>
-                @endauth
+                <li>
+                    <form action="/dashboard" method="get">
+                        <button type="submit">Dashboard</button>
+                    </form>
+                </li>
+                <li>
+                    <form action="{{ route('logout') }}" method="POST">
+                        {{ csrf_field() }}
+                        <button type="submit">Logout</button>
+                    </form>
+                </li>
+                <li>
+                    <form action="/profile" method="get">
+                        <button type="submit">Profile</button>
+                    </form>
+                </li>
             </ul>
         </nav>
 
         <section>
             <h2>Dashboard</h2>
-            <p>Welcome, Coming Soon....</p>
+            <p>Welcome, 
+                <strong>
+                    @auth
+                        {{ Auth::user()->name }}
+                    @else
+                        Guest
+                    @endauth
+                </strong>
+            </p>
         </section>
     </div>    
 </body>
