@@ -50,4 +50,25 @@ class UserController extends Controller
         auth()->logout();
         return redirect('/home');
     }
+
+    public function changepassword(Request $req) {
+        $incomingData = $req->validate([
+            'oldpassword' => 'required',
+            'newpassword' => 'required|min:8|confirmed',
+        ]);
+
+        // check old password to be same as current password. then change it to new pasword
+        $user = auth()->user();
+        if (!password_verify($incomingData['oldpassword'], $user->password)) {
+            return back()->withErrors([
+                'oldpassword' => 'The provided credentials do not match our records.',
+            ]);
+        }
+        else {
+            $user->password = bcrypt($incomingData['newpassword']);
+            $user->save();
+        }
+
+        return redirect('/profile');
+    }
 }

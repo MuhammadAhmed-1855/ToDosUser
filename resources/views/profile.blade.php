@@ -56,15 +56,44 @@
 
         <section>
             <h2>Profile</h2>
-            <p>Welcome, 
-                <strong>
-                    @auth
+            @auth
+                <h3>Welcome, 
+                    <em>
                         {{ Auth::user()->name }}
-                    @else
+                    </em>
+                </h3>
+                <div>
+                    <h2>Change Password</h2>
+                    <form action="/changepassword" method="post">
+                        @csrf
+                        
+                        <br><br><br><br>
+
+                        <label for="oldpassword">Old Password</label>
+                        <input type="password" name="oldpassword" id="oldpassword" required>
+                        
+                        <br><br><br><br>
+                        
+                        <label for="newpassword">New Password</label>
+                        <input type="password" name="newpassword" id="newpassword" required>
+                        
+                        <br><br><br><br>
+
+                        <label for="newpassword_confirmation">Confirm Password</label>
+                        <input type="password" name="newpassword_confirmation" required>
+                        
+                        <br><br><br><br>
+
+                        <button type="submit">Change Password</button>
+                </div>
+            @else
+                <h3>Welcome, 
+                    <em>
                         Guest
-                    @endauth
-                </strong>
-            </p>
+                    </em>
+                </h3>
+                <p>Please, Login to see your profile.</p>
+            @endauth
         </section>
     </div>    
 </body>

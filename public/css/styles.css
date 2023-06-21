@@ -40,3 +40,16 @@ form {
     align-items: center;
     justify-content: center;
 }
+#ToDoList {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#ToDoList form button {
+    margin-left: 30px;
+}
+
+button {
+    border-radius: 20px;
+}

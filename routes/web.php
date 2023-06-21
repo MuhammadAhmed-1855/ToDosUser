@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\TodosController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,10 +24,6 @@ Route::get('/home', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
-
 Route::get('/profile', function () {
     return view('profile');
 })->middleware(['auth'])->name('profile');
@@ -42,8 +40,18 @@ Route::get('/registerview', function () {
     return view('register');
 });
 
+Route::get('/dashboard', [TodosController::class, 'todos'])->middleware(['auth'])->name('todos');
+
+
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
 Route::post('/register', [UserController::class, 'register'])->name('register');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::post('/changepassword', [UserController::class, 'changepassword'])->name('changepassword');
+
+Route::post('/mark/{id}', [TodosController::class, 'mark'])->name('mark');
+
+Route::post('/AddTodo', [TodosController::class, 'AddTodo'])->name('AddTodo');
+
