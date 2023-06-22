@@ -18,18 +18,23 @@ class UserController extends Controller
 
         if (auth()->attempt([ 'email' => $incomingData['email'], 'password' => $incomingData['password'] ])) {
             $req->session()->regenerate();
-            $domain = substr(strrchr($incomingData['email'], "@"), 1);
-            if($domain == 'internet.com') {
-                return redirect('/admin/dashboard');
-            }
-            else {
-                return redirect('/member/dashboard');
+            $user = User::where('email', $incomingData['email'])->first();
+
+            $roles = $user->roles;
+
+            foreach($roles as $role) {
+                if ($role->name == 'admin') {
+                    return redirect('/admin/dashboard');
+                }
+                elseif ($role->name == 'member') {
+                    return redirect('/member/dashboard');
+                }
             }
         }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        // return back()->withErrors([
+        //     'email' => 'The provided credentials do not match our records.',
+        // ]);
     }
 
     public function register(Request $req)
@@ -40,10 +45,6 @@ class UserController extends Controller
             'password' => 'required|min:8|confirmed'
         ]);
 
-        if ($req->fails()) {
-            return redirect()->back()->withErrors($req->errors())->withInput();
-        }
-
         $user = new User();
         $user->name = $incomingData['name'];
         $user->email = $incomingData['email'];
@@ -52,7 +53,7 @@ class UserController extends Controller
         $domain = substr(strrchr($incomingData['email'], "@"), 1);
 
         if($domain == 'internet.com') {
-            $admin_role = Role::create(['name' => 'admin']);
+            $admin_role = Role::where('name', 'admin')->first();
             $user->assignRole($admin_role);
             $user->save();
 
@@ -61,7 +62,7 @@ class UserController extends Controller
             return redirect('/admin/dashboard');
         }
         else {
-            $user_role = Role::create(['name' => 'member']);
+            $user_role = Role::where(['name' => 'member'])->first();
             $user->assignRole($user_role);
             $user->save();
 
