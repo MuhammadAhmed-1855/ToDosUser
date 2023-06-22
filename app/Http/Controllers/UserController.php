@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -18,7 +18,13 @@ class UserController extends Controller
 
         if (auth()->attempt([ 'email' => $incomingData['email'], 'password' => $incomingData['password'] ])) {
             $req->session()->regenerate();
-            return redirect('/dashboard');
+            $domain = substr(strrchr($incomingData['email'], "@"), 1);
+            if($domain == 'internet.com') {
+                return redirect('/admin/dashboard');
+            }
+            else {
+                return redirect('/member/dashboard');
+            }
         }
 
         return back()->withErrors([
@@ -28,22 +34,41 @@ class UserController extends Controller
 
     public function register(Request $req)
     {
-        print_r($req->input());
         $incomingData = $req->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:8|confirmed'
         ]);
 
+        if ($req->fails()) {
+            return redirect()->back()->withErrors($req->errors())->withInput();
+        }
+
         $user = new User();
         $user->name = $incomingData['name'];
         $user->email = $incomingData['email'];
         $user->password = bcrypt($incomingData['password']);
-        $user->save();
 
-        auth()->login($user);
+        $domain = substr(strrchr($incomingData['email'], "@"), 1);
 
-        return redirect('/dashboard');
+        if($domain == 'internet.com') {
+            $admin_role = Role::create(['name' => 'admin']);
+            $user->assignRole($admin_role);
+            $user->save();
+
+            auth()->login($user);
+    
+            return redirect('/admin/dashboard');
+        }
+        else {
+            $user_role = Role::create(['name' => 'member']);
+            $user->assignRole($user_role);
+            $user->save();
+
+            auth()->login($user);
+    
+            return redirect('/member/dashboard');
+        }
     }
 
     public function logout() {
@@ -71,4 +96,11 @@ class UserController extends Controller
 
         return redirect('/profile');
     }
+
+    public function allUserRole() {
+        // All users that have role of user
+        $users = User::role('member')->get();
+        return view('/admin/dashboard', ['users' => $users]);
+    }
+
 }

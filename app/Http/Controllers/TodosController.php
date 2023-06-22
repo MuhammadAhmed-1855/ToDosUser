@@ -12,7 +12,7 @@ class TodosController extends Controller
 
     public function todos() {
         $todos = Todo::where('user_id', auth()->user()->id)->get();
-        return view('dashboard', ['listItems' => $todos]);
+        return view('/member/dashboard', ['listItems' => $todos]);
     }
 
     public function mark($id) {
@@ -25,7 +25,7 @@ class TodosController extends Controller
         }
         $todo->save();
 
-        return redirect('/dashboard');
+        return redirect('/member/dashboard');
     }
 
     public function AddTodo(Request $req) {
@@ -39,6 +39,6 @@ class TodosController extends Controller
         $todo->user_id = auth()->user()->id;
         $todo->save();
 
-        return redirect('/dashboard');
+        return redirect('/member/dashboard');
     }
 }

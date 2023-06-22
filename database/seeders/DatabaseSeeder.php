@@ -23,25 +23,25 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $admin_role = Role::create(['name' => 'admin']);
+        // $admin_role = Role::create(['name' => 'admin']);
 
-        $admin = User::create([
-            'name' => 'Admin',
-            'email' => 'Admin@internet.com',
-            'password' => bcrypt('AdminPassword'),
-        ]);
+        // $admin = User::create([
+        //     'name' => 'Admin',
+        //     'email' => 'Admin@internet.com',
+        //     'password' => bcrypt('AdminPassword'),
+        // ]);
 
-        $admin->assignRole($admin_role);
+        // $admin->assignRole($admin_role);
 
-        $user_role = Role::create(['name' => 'user']);
+        // $user_role = Role::create(['name' => 'member']);
 
-        $user = User::create([
-            'name' => 'SDF',
-            'email' => 'SDF@nu.edu.pk',
-            'password' => bcrypt('234567890'),
-        ]);
+        // $user = User::create([
+        //     'name' => 'SDF',
+        //     'email' => 'SDF@nu.edu.pk',
+        //     'password' => bcrypt('234567890'),
+        // ]);
 
-        $admin->assignRole($user_role);
+        // $user->assignRole($user_role);
 
 
         // $permission = Permission::create(['name' => 'delete users']);

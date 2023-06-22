@@ -40,8 +40,11 @@ Route::get('/registerview', function () {
     return view('register');
 });
 
-Route::get('/dashboard', [TodosController::class, 'todos'])->middleware(['auth'])->name('todos');
+Route::get('/member/dashboard', [TodosController::class, 'todos'])->middleware(['auth'])->name('todos');
 
+Route::get('/admin/dashboard', [UserController::class, 'allUserRole'])->middleware(['auth'])->name('allUserRole');
+
+// Route::get('/allUserRole', [UserController::class, 'allUserRole'])->middleware(['auth'])->name('allUserRole');
 
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
