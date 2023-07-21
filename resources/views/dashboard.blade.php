@@ -75,23 +75,27 @@
 
                 <br><br><br><br>
 
-                @foreach ($listItems as $listItem)
-                    <div id="ToDoList">
-                        <p>Item: {{ $listItem->title }}, {{ $listItem->description }}</p>
+                @if(!$listItems)
+                    @foreach ($listItems as $listItem)
+                        <div id="ToDoList">
+                            <p>Item: {{ $listItem->title }}, {{ $listItem->description }}</p>
 
-                        <form action="{{ route('mark', $listItem->id) }}" method="post">
-                            {{ csrf_field() }}
+                            <form action="{{ route('mark', $listItem->id) }}" method="post">
+                                {{ csrf_field() }}
 
-                            <button type="submit">
-                                @if ($listItem->completed == true)
-                                    Mark Incomplete
-                                @else
-                                    Mark Complete
-                                @endif
-                            </button>
-                        </form>
-                    </div>
-                @endforeach
+                                <button type="submit">
+                                    @if ($listItem->completed == true)
+                                        Mark Incomplete
+                                    @else
+                                        Mark Complete
+                                    @endif
+                                </button>
+                            </form>
+                        </div>
+                    @endforeach
+                @else
+                    <p>You have no items in your list.</p>
+                @endif
 
             @else
                 <h3>Welcome, 

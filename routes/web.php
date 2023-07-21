@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TodosController;
 
@@ -45,7 +46,7 @@ Route::get('/dashboard', [TodosController::class, 'todos'])->middleware(['auth']
 
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
-Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register');
 
 Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 
